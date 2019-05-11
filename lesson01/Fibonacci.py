@@ -1,5 +1,8 @@
 def fib(n):
-    return 0
+    if n == 0 or n == 1:
+        return n
+    else:
+        return fib(n-1) + fib(n-2)
 
 number = fib(30)
 print(number)
