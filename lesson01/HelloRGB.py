@@ -8,9 +8,9 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
 # 設定 LED pin變數
-LED0 = 11
-LED1 = 13
-LED2 = 15
+LED0 = 11 #R
+LED1 = 13 #G
+LED2 = 15 #B
 
 # 設定為輸出
 GPIO.setup(LED0, GPIO.OUT)

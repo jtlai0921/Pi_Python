@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BOARD)
 
 # 設定 LED pin變數
-LED0 = 7
+LED0 = 12
 
 # 設定為輸出
 GPIO.setup(LED0, GPIO.OUT)
