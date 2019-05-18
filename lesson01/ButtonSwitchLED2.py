@@ -35,7 +35,5 @@ def switchLED() :
         yellow.off()
         red.off()
 
-while True:
-    button.wait_for_press()
-    switchLED()
-    sleep(0.3)
+button.when_pressed= switchLED
+pause()
