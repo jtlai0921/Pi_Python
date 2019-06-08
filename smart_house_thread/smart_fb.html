@@ -1,0 +1,144 @@
+<!--
+	Firebase Realtime Database (Web)
+	http://blog.kenyang.net/2017/08/25/firebase-realtime-database-web
+	Pure CSS
+	https://purecss.io/
+-->
+<html>
+<head>
+	<title>Smart House</title>
+	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">	
+	<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+	<script>
+	  var config = {
+	    apiKey: "Mb4AGrCGcR6DQ8R0HujLsYm4gaYpMpLtGOS2ouNJ",
+	    authDomain: "iotfb-fc0b9.firebaseapp.com",
+	    databaseURL: "https://iotfb-fc0b9.firebaseio.com",
+	    projectId: "iotfb-fc0b9",
+	    storageBucket: "iotfb-fc0b9.appspot.com",
+	    messagingSenderId: "544095900719"
+	  };
+	  
+	  firebase.initializeApp(config);
+	  const database = firebase.database();
+	  var auto;
+	  
+	 //  // 測試-寫資料
+	 //  firebase.database().ref('hello/demo').set({
+	 //    'msg': 'show time ' + new Date()
+		// });
+
+	 //  // 測試-讀資料
+	 //  const hello = database.ref('hello/demo');
+		// hello.on('value', function(snapshot) {
+		//     console.log(snapshot.val().msg);
+		// });
+
+	  function turnOn() {
+	  	turn_on_btn.disabled = true;
+		turn_off_btn.disabled = false;
+	  	firebase.database().ref('smart_thread_control').set({
+	    	'cds_relay': 'off',
+	    	'relay': 'on'
+		});
+	  }	
+
+	  function turnOff() {
+	  	turn_on_btn.disabled = false;
+		turn_off_btn.disabled = true;
+	  	firebase.database().ref('smart_thread_control').set({
+	    	'cds_relay': 'off',
+	    	'relay': 'off'
+		});
+		setInterval(function(){
+			firebase.database().ref('smart_thread_control').set({
+	    		'cds_relay': 'on',
+	    		'relay': 'off'
+			});
+		},3000);
+		
+	  }
+
+	  function auto_play(flag) {
+
+	  	if(flag) {
+	  		auto_play_btn.disabled = true;
+	  		stop_play_btn.disabled = false;
+		  	auto = setInterval(function(){
+				const data = database.ref('smart_thread');
+				data.on('value', function(snapshot) {
+					cds_value.innerText = snapshot.val().cds;
+					distance_value.innerText = snapshot.val().distance;
+					lm35_value.innerText = snapshot.val().lm35;
+					pir_value.innerText = snapshot.val().pir;
+					pot_value.innerText = snapshot.val().pot;
+					servo_value.innerText = snapshot.val().servo;
+
+				});
+			},1000);
+	  	} else {
+	  		auto_play_btn.disabled = false;
+	  		stop_play_btn.disabled = true;
+	  		clearInterval(auto);
+	  	}
+
+	  }
+
+	</script>
+</head>
+<body style="padding: 10px">
+	<form class="pure-form">
+    <fieldset>
+        <legend>Smart house</legend>
+
+        <button type="button" id="turn_on_btn" class="pure-button pure-button-primary" onclick="turnOn()">TurnOn</button>
+        <button type="button" id="turn_off_btn" class="pure-button pure-button-primary" onclick="turnOff()" disabled>TurnOff</button>
+        <p>
+        <button type="button" id="auto_play_btn" class="pure-button pure-button-primary" onclick="auto_play(true)">Auto Play</button>
+        <button type="button" id="stop_play_btn" class="pure-button pure-button-primary" onclick="auto_play(false)" disabled>Stop Play</button>
+        <p>	
+        <table class="pure-table pure-table-bordered">
+		    <thead>
+		        <tr>
+		            <th>Sensor</th>
+		            <th>value</th>
+		        </tr>
+		    </thead>
+
+		    <tbody>
+		        <tr>
+		            <td>CDS</td>
+		            <td><div id="cds_value" /></td>
+		        </tr>
+
+		        <tr>
+		            <td>Distance</td>
+		            <td><div id="distance_value" /></td>
+		        </tr>
+
+		        <tr>
+		            <td>LM 35</td>
+		            <td><div id="lm35_value" /></td>
+		        </tr>
+
+		        <tr>
+		            <td>PIR</td>
+		            <td><div id="pir_value" /></td>
+		        </tr>
+
+		        <tr>
+		            <td>POT</td>
+		            <td><div id="pot_value" /></td>
+		        </tr>
+
+		        <tr>
+		            <td>Servo</td>
+		            <td><div id="servo_value" /></td>
+		        </tr>
+		    </tbody>
+		</table>
+    </fieldset>
+</form>
+</body>
+
+</html>

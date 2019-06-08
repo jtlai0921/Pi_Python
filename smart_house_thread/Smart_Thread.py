@@ -34,7 +34,6 @@ smartobj = {
     "servo": "off",
     "distance": "0",
     "cds":"off",
-    "cds_auto":"on",
     "lm35": 0.0,
     "pot": 0.0,
 }
