@@ -19,10 +19,10 @@ smartobj = {
 
 # init data
 servo.min()
-lcd = smart_house.LCD
-lcd.lcd_init()
-lcd.lcd_string("Smart House", 0x80)
-lcd.lcd_string("Yes", 0xC0)
+# lcd = smart_house.LCD
+# lcd.lcd_init()
+# lcd.lcd_string("Smart House", 0x80)
+# lcd.lcd_string("Yes", 0xC0)
 
 
 def warn():
@@ -75,7 +75,7 @@ def servo_service():
 
 def send():
     msg = 'pir:%s servo:%s' % (smartobj['pir'], smartobj['servo'])
-    lcd.lcd_string(msg, 0xC0)
+    #lcd.lcd_string(msg, 0xC0)
     result = requests.put(firebase_url + '/smart.json', verify=False, data=json.dumps(smartobj))
     print(result)
 
