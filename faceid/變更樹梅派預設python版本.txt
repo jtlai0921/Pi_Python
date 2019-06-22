@@ -1,0 +1,1 @@
+https://linuxconfig.org/how-to-change-from-default-to-alternative-python-version-on-debian-linux
