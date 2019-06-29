@@ -13,7 +13,7 @@ rawCapture = PiRGBArray(camera, size=(640, 480))
 display_window = cv2.namedWindow("Faces")
 
 #載入臉部特徵模組
-face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
 
 time.sleep(0.1)
 
